@@ -32,3 +32,15 @@ https://fastapi.tiangolo.com/tutorial
 https://sqlmodel.tiangolo.com/tutorial/
 https://youtu.be/GONyd0CUrPc
 https://docs.python.org/3/library/xml.etree.elementtree.html
+
+
+## Для запуска
+1. Активируйте венв
+2. Установите зависимости:
+   ```pip install -r requirements.txt```
+3. Запустите сервер
+    ```fastapi dev main.py```
+4. Импортируйте валюты из ЕЦБ
+   ```py import_rates.py```
+5. Перейдите на сайт приложения
+   (http://127.0.0.1:8000/docs)
