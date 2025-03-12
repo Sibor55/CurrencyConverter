@@ -59,6 +59,11 @@ def test_convert_currency_valid():
     assert response.status_code == 200
     assert response.json() == 120.0  # 100 * 1.2
 
+def test_convert_currency_bignumbers():
+    response = client.get("/convert/?from_cur=EUR&to_cur=USD&amount=4396345.43")
+    assert response.status_code == 200
+    assert response.json() == 5275614.52 
+
 
 def test_convert_invalid_currency():
     response = client.get("/convert/?from_cur=XYZ&to_cur=USD&amount=100")
