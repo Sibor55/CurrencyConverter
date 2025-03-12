@@ -11,7 +11,7 @@
 1.	~~Написать консольную команду для импорта данных из этого источника - https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml~~ - сделано
 2.	~~Сделать API для получения списка импортированных котировок, API для удаления и редактирования.~~ - сделано
 3.	~~Сделать API конвертера валют. Если нет прямой конвертации, то пытаться конвертировать через другую валюту (кросс-курс).~~ - сделано
-4.	Калькулятор - выбираем From, To, Amount и видим конвертированную сумму. (минимум красоты, максимум функционала, просто форма) 
+4.	~~Калькулятор - выбираем From, To, Amount и видим конвертированную сумму. (минимум красоты, максимум функционала, просто форма)~~ - сделано
 
 
 Требования к выполнению:
@@ -32,15 +32,35 @@ https://fastapi.tiangolo.com/tutorial
 https://sqlmodel.tiangolo.com/tutorial/
 https://youtu.be/GONyd0CUrPc
 https://docs.python.org/3/library/xml.etree.elementtree.html
+https://jinja.palletsprojects.com/en/stable/templates/
 
 
-## Для запуска
-1. Активируйте венв
-2. Установите зависимости:
-   ```pip install -r requirements.txt```
-3. Запустите сервер
-    ```fastapi dev main.py```
-4. Импортируйте валюты из ЕЦБ
-   ```py import_rates.py```
-5. Перейдите на сайт приложения
-   (http://127.0.0.1:8000/docs)
+## Установка и запуск
+
+### 1. Виртуальное окружение
+```bash
+python -m venv venv
+venv\Scripts\activate  # Для Windows
+```
+
+### 2. Зависимости
+```bash
+pip install -r requirements.txt
+```
+
+### 3. Запуск сервера
+```bash
+fastapi dev main.py
+```
+
+### 4. Консольная команда для импорта в бд
+```bash
+python import_rates.py
+```
+
+### 5. Откройте приложение в браузере
+Форма для приложения: (http://127.0.0.1:8000/)
+Документация API: (http://127.0.0.1:8000/docs)
+
+
+

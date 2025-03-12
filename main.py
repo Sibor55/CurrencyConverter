@@ -1,7 +1,9 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from sqlmodel import Field, Session, SQLModel, create_engine, select
+from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
 
-
+templates = Jinja2Templates(directory="template")
 class Currency(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
     cur: str = Field(index=True)
@@ -33,30 +35,51 @@ def get_rates_dict() -> dict:
         return {c.cur: c.value for c in currencies}
 
 
-@app.get("/convert")
-def convert_currency(from_cur: str, to_cur: str, amount: float):
+@app.get("/", response_class=HTMLResponse)
+def read_root(request: Request, from_cur: str = None, to_cur: str = None, amount: float = None):
     rates = get_rates_dict()
-    if from_cur == to_cur:
-        return {"result": amount}
-
-    try:
-        if from_cur == "EUR":
-            result = amount * rates[to_cur]
-        elif to_cur == "EUR":
-            result = amount / rates[from_cur]
-        else:
-            eur_amount = amount / rates[from_cur]
-            result = eur_amount * rates[to_cur]
-        return {
-            "from": from_cur,
-            "to": to_cur,
-            "amount": amount,
-            "result": round(result, 2),
-            "path": [from_cur, "EUR", to_cur],
+    currencies = list(rates.keys())
+    result = error = None
+    
+    if all([from_cur, to_cur, amount is not None]):
+        try:
+            if from_cur not in currencies or to_cur not in currencies:
+                raise ValueError("Invalid currency selected")
+                
+            from_rate = rates.get(from_cur)
+            to_rate = rates.get(to_cur)
+            
+            if from_rate == 0:
+                raise ValueError("Zero rate conversion not allowed")
+            
+            if from_cur == to_cur:
+                result = amount
+            elif from_cur == "EUR":
+                result = amount * to_rate
+            elif to_cur == "EUR":
+                result = amount / from_rate
+            else:
+                eur_amount = amount / from_rate
+                result = eur_amount * to_rate
+                
+            result = round(result, 2)
+        except (KeyError, ValueError, TypeError) as e:
+            error = f"Conversion error: {str(e)}"
+        except Exception as e:
+            error = f"Unexpected error: {str(e)}"
+    
+    return templates.TemplateResponse(
+        "form.html",
+        {
+            "request": request,
+            "currencies": currencies,
+            "result": result,
+            "error": error,
+            "from_cur": from_cur,
+            "to_cur": to_cur,
+            "amount": amount
         }
-    except KeyError as c:
-        raise HTTPException(status_code=400, detail=f"Currency {c} not supported")
-
+    )
 
 @app.post("/rates/")
 def add_currency(currency: Currency):
