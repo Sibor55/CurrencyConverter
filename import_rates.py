@@ -14,9 +14,6 @@ def import_ecb_rates():
             session.exec(delete(Currency))
             session.commit()
 
-            # Добавление EUR
-            session.add(Currency(cur="EUR", value=1.0))
-            
             # Загрузка данных
             response = requests.get("https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml", timeout=10)
             response.raise_for_status()  # Проверка ошибок HTTP
