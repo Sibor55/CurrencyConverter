@@ -47,6 +47,11 @@ docker exec <containerid> python import_rates.py
 
 
 ------
+Для тестирования 
+```bash
+pytest
+```
+------
 Вводные данные: 
 
 
