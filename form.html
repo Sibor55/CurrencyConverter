@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>$Title$</title>
+</head>
+<body>
+    <form>
+        <div class="center-screen">
+            <label for="from">From:</label>
+            <select id="from" name="from" required>
+                <option value="USD">USD</option>
+                <option value="EUR">EUR</option>
+                <option value="RUB">RUB</option>
+            </select>
+       
+            <label for="to">To:</label>
+            <select id="to" name="to" required>
+                <option value="USD">USD</option>
+                <option value="EUR">EUR</option>
+                <option value="RUB">RUB</option>
+            </select>
+        </div>
+            
+        <div>
+            <label for="amount">Amount:</label>
+            <input type="number" id="amount" name="amount" placeholder="Input" required>
+        </div>
+        
+        <button type="submit">Convert</button>
+    </form>
+</body>
+</html>
