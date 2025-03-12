@@ -1,4 +1,52 @@
 # CurrencyConverter
+
+
+
+## Установка и запуск
+### Способ 1. Native
+#### 1. Клонируйте репозиторий и создайте виртуальное окружение
+```bash
+python -m venv venv
+venv\Scripts\activate.ps1
+```
+
+#### 2. Зависимости
+```bash
+pip install -r requirements.txt
+```
+
+#### 3. Запуск сервера
+```bash
+fastapi dev main.py
+```
+
+#### 4. Консольная команда для импорта данных с ЕЦБ в бд
+```bash
+python import_rates.py
+```
+
+#### 5. Откройте приложение в браузере
+Форма для приложения: (http://127.0.0.1:8000/)
+Документация API: (http://127.0.0.1:8000/docs)
+
+### Способ 2. Docker
+
+#### 1. Клонируйте репозиторий
+
+#### 2. Сбилдите контейнер и запустите его
+```bash
+docker-compose build && docker-compose up -d
+```
+#### 3. Консольная команда для импорта данных с ЕЦБ в бд(Мы запускали в DockerDesktop, в Exec)
+```bash
+python import_rates.py
+```
+#### 4. Откройте приложение в браузере
+Форма для приложения: (http://127.0.0.1:8000/)
+Документация API: (http://127.0.0.1:8000/docs)
+
+
+------
 Вводные данные: 
 
 
@@ -17,9 +65,9 @@
 Требования к выполнению:
 
 
-1.	Весь проект должен быть в docker контейнерах
-2.	Code coverage 100% (покрыть тестами)
-3.	Автоматизация сборок и тестов
+1.	~~Весь проект должен быть в docker контейнерах~~ - кое-как сделано
+2.	~~Code coverage 100% (покрыть тестами)~~ - кое-как сделано
+3.	~~Автоматизация сборок~~ и тестов 
 
 
 
@@ -27,7 +75,7 @@
 Ответ в виде репозитория на github/bitbucket с инструкцией (readme) по запуску.
 
 
-
+------
 https://fastapi.tiangolo.com/tutorial
 https://sqlmodel.tiangolo.com/tutorial/
 https://youtu.be/GONyd0CUrPc
@@ -35,32 +83,6 @@ https://docs.python.org/3/library/xml.etree.elementtree.html
 https://jinja.palletsprojects.com/en/stable/templates/
 
 
-## Установка и запуск
-
-### 1. Виртуальное окружение
-```bash
-python -m venv venv
-venv\Scripts\activate  # Для Windows
-```
-
-### 2. Зависимости
-```bash
-pip install -r requirements.txt
-```
-
-### 3. Запуск сервера
-```bash
-fastapi dev main.py
-```
-
-### 4. Консольная команда для импорта в бд
-```bash
-python import_rates.py
-```
-
-### 5. Откройте приложение в браузере
-Форма для приложения: (http://127.0.0.1:8000/)
-Документация API: (http://127.0.0.1:8000/docs)
 
 
 
