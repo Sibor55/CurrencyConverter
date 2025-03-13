@@ -30,7 +30,7 @@
             <input type="number" id="amount" name="amount" 
                    placeholder="Input amount" 
                    value="{{ amount if amount is not none else '' }}" 
-                   step="0.01" required>
+                   step="0.01" min="0.01" max="99999999999999" required>
         </div>
 
         <button type="submit">Convert</button>
