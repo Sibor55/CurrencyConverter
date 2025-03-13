@@ -39,13 +39,18 @@ docker-compose build && docker-compose up -d
 ```
 #### 3. Консольная команда для импорта данных с ЕЦБ в бд(Мы запускали в DockerDesktop, в Exec)
 ```bash
-python import_rates.py
+docker exec <containerid> python import_rates.py
 ```
 #### 4. Откройте приложение в браузере
 Форма для приложения: (http://127.0.0.1:8000/)
 Документация API: (http://127.0.0.1:8000/docs)
 
 
+------
+Для тестирования 
+```bash
+pytest
+```
 ------
 Вводные данные: 
 
