@@ -1,54 +1,252 @@
-<!-- In form.html -->
 <!DOCTYPE html>
 <html lang="ru">
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Currency Converter</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-light: #e6f0fd;
+            --text: #2b2d42;
+            --text-light: #8d99ae;
+            --background: #f8f9fa;
+            --card: #ffffff;
+            --error: #ef233c;
+            --success: #2ec4b6;
+            --border: #e9ecef;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .converter-card {
+            background-color: var(--card);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            padding: 32px;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            text-align: center;
+            color: var(--primary);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--text-light);
+        }
+
+        select,
+        input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s;
+            background-color: var(--card);
+        }
+
+        select:focus,
+        input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-light);
+        }
+
+        .currency-row {
+            display: flex;
+            gap: 16px;
+        }
+
+        .currency-row .form-group {
+            flex: 1;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 8px;
+        }
+
+        button:hover {
+            background-color: #3a56d5;
+        }
+
+        .result {
+            margin-top: 24px;
+            padding: 16px;
+            background-color: var(--primary-light);
+            border-radius: 8px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: 500;
+            color: var(--primary);
+            animation: fadeIn 0.5s;
+        }
+
+        .error {
+            margin-top: 24px;
+            padding: 16px;
+            background-color: #fde8e8;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 16px;
+            color: var(--error);
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .swap-btn {
+            display: flex;
+            justify-content: center;
+            margin: 12px 0;
+        }
+
+        .swap-btn button {
+            width: auto;
+            padding: 8px 12px;
+            background-color: var(--border);
+            color: var(--text-light);
+        }
+
+        .swap-btn button:hover {
+            background-color: #d1d5db;
+        }
+
+        @media (max-width: 480px) {
+            .converter-card {
+                padding: 24px;
+            }
+
+            .currency-row {
+                flex-direction: column;
+                gap: 16px;
+            }
+        }
+    </style>
 </head>
 
 <body>
-    <form action="/" method="GET">
-        <div class="center-screen">
-            <label for="from_cur">From:</label>
-            <select id="from_cur" name="from_cur" required>
-                {% for currency in currencies %}
-                <option value="{{ currency }}" {% if from_cur == currency %}selected{% endif %}>{{ currency }}</option>
-                {% endfor %}
-            </select>
+    <div class="container">
+        <div class="converter-card">
+            <h1>Currency Converter</h1>
 
-            <label for="to_cur">To:</label>
-            <select id="to_cur" name="to_cur" required>
-                {% for currency in currencies %}
-                <option value="{{ currency }}" {% if to_cur == currency %}selected{% endif %}>{{ currency }}</option>
-                {% endfor %}
-            </select>
+            <form action="/" method="GET">
+                <div class="currency-row">
+                    <div class="form-group">
+                        <label for="from_cur">From</label>
+                        <select id="from_cur" name="from_cur" required>
+                            {% for currency in currencies %}
+                            <option value="{{ currency }}" {% if from_cur==currency %}selected{% endif %}>{{ currency }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="to_cur">To</label>
+                        <select id="to_cur" name="to_cur" required>
+                            {% for currency in currencies %}
+                            <option value="{{ currency }}" {% if to_cur==currency %}selected{% endif %}>{{ currency }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="swap-btn">
+                    <button type="button" onclick="swapCurrencies()">↔ Swap currencies</button>
+                </div>
+
+                <div class="form-group">
+                    <label for="amount">Amount</label>
+                    <input type="number" id="amount" name="amount" placeholder="Enter amount"
+                        value="{{ amount if amount is not none else '' }}" step="0.01" min="0.01" max="99999999999999"
+                        required>
+                </div>
+
+                <button type="submit">Convert</button>
+
+                {% if result is not none %}
+                <div class="result">
+                    <p>{{ "%.2f"|format(amount) }} {{ from_cur }} = {{ "%.2f"|format(result) }} {{ to_cur }}</p>
+                </div>
+                {% endif %}
+
+                {% if error %}
+                <div class="error">
+                    <p>{{ error }}</p>
+                </div>
+                {% endif %}
+            </form>
         </div>
+    </div>
 
-        <div>
-            <label for="amount">Amount:</label>
-            <input type="number" id="amount" name="amount" 
-                   placeholder="Input amount" 
-                   value="{{ amount if amount is not none else '' }}" 
-                   step="0.01" min="0.01" max="99999999999999" required>
-        </div>
+    <script>
+        function swapCurrencies() {
+            const fromSelect = document.getElementById('from_cur');
+            const toSelect = document.getElementById('to_cur');
+            const temp = fromSelect.value;
 
-        <button type="submit">Convert</button>
-
-        {% if result is not none %}
-        <div class="result">
-            <p>{{ "%.2f"|format(amount) }} {{ from_cur }} = {{ "%.2f"|format(result) }} {{ to_cur }}</p>
-        </div>
-        {% endif %}
-        
-        {% if error %}
-        <div class="error">
-            <p>Error: {{ error }}</p>
-        </div>
-        {% endif %}
-    </form>
-    
-
+            fromSelect.value = toSelect.value;
+            toSelect.value = temp;
+        }
+    </script>
 </body>
 
 </html>
